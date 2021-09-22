@@ -1,19 +1,21 @@
 const mongoose = require("mongoose");
-const Joi = require("joi");
 
-const Review = mongoose.model(
-  "Review",
-  new mongoose.Schema(
-    {
-      review: { type: String, required: true, minLength: 3 },
-      recommendation: { type: String, required: true, minLength: 3 },
-      rating: { type: Number, required: true },
-    },
-    {
-      timestamps: true,
-    }
-  )
+const hotelReviewSchema = new mongoose.Schema(
+  {
+    review: { type: String, required: true, minLength: 3 },
+    name: { type: String, required: true, minLength: 3 },
+    reply: { type: String, required: true, minLength: 3 },
+    rating: { type: Number, required: true },
+  },
+  {
+    timestamps: true,
+  }
 );
+
+module.exports = mongoose.model("reviews", hotelReviewSchema);
+
+
+
 
 //   function validateFood(food) {
 //     const schema = Joi.object({
@@ -26,5 +28,4 @@ const Review = mongoose.model(
 //     return schema.validate(food);
 //   }
 
-exports.Review = Review;
 //exports.validateFood = validateFood;
