@@ -7,6 +7,8 @@ const Food = mongoose.model(
     {
       name: { type: String, required: true, minLength: 3 },
       category: { type: String, required: false, minLength: 3 },
+      status:{ type: String, required: true, minLength: 3 },
+      code:{ type: String, required: true, minLength: 3 },
       description: { type: String, required: true, minLength: 3 },
       price: { type: Number, required: true, minLength: 2 },
       discount: { type: Number, required: false },
@@ -20,6 +22,8 @@ const Food = mongoose.model(
 function validateFood(food) {
   const schema = Joi.object({
     name: Joi.string().min(3).max(50).required(),
+    status:Joi.string().required(),
+    code:Joi.string().required(),
     description: Joi.string().min(3).max(500).required(),
     price: Joi.number().positive().min(2),
     category: Joi.string().min(2),
