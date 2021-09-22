@@ -4,8 +4,8 @@ const hotelReviewSchema = new mongoose.Schema(
   {
     review: { type: String, required: true, minLength: 3 },
     name: { type: String, required: true, minLength: 3 },
-    reply: { type: String, required: true, minLength: 3 },
     rating: { type: Number, required: true },
+    reply: { type: String, required: false, minLength: 3, default: null },
   },
   {
     timestamps: true,
