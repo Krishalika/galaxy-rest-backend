@@ -45,7 +45,7 @@ waiterSchema.methods.generateAuthToken = function () {
   return token;
 };
 
-const Waiter = mongoose.model("waiters", waiterSchema); //table name
+const Waiter = mongoose.model("waiters", waiterSchema); //table name is 'waiters'
 
 function validateWaiter(waiter) {
   const schema = Joi.object({
