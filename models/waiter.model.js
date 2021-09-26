@@ -56,9 +56,9 @@ function validateWaiter(waiter) {
     contactNo: Joi.number()
       .integer()
       .positive()
-      .min(100000000)
-      .max(999999999)
-      .required(),
+      .min(100000000000)
+      .max(999999999999)
+      .required(),//contact num ex:940702987655
     salary: Joi.number().integer().positive().required(),
   });
 
