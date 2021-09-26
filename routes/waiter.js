@@ -10,7 +10,7 @@ const mongoose = require("mongoose");
 const express = require("express");
 const router = express.Router();
 
-router.get("/me", auth, async (req, res) => {
+router.get("/waiterLog", auth, async (req, res) => {
   const waiter = await Waiter.findById(req.waiter._id).select("-password");
   res.send(waiter);
 });
@@ -50,3 +50,8 @@ router.post("/signup", async (req, res) => {
 });
 
 module.exports = router;
+
+// router.get("/me", auth, async (req, res) => {
+//   const waiter = await Waiter.findById(req.waiter._id).select("-password");
+//   res.send(waiter);
+// });
