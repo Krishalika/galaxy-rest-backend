@@ -52,8 +52,8 @@ app.use("/category", categoryRouter);*/
 
 app.use("/", require("./routes/rootRoutes"));
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`server is running on port:${port}`);
 });
 
-module.exports = app;
+module.exports = { app, server };

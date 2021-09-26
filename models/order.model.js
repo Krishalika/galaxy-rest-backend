@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Joi = require("joi");
 
 const orderSchema = new mongoose.Schema(
   {
@@ -31,4 +32,25 @@ const orderSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("order", orderSchema);
+function orderValidation(body) {
+  const schema = Joi.object({
+    customerName: Joi.string().required(),
+    idNumber: Joi.string().required(),
+    foodItems: Joi.array()
+      .items(
+        Joi.object({
+          item: Joi.string().required(),
+          soldPrice: Joi.number().required(),
+          qty: Joi.number().required(),
+        })
+      )
+      .required(),
+    tableNumber: Joi.number().required(),
+  });
+  return schema.validate(body);
+}
+
+module.exports = {
+  Order: mongoose.model("order", orderSchema),
+  orderValidation,
+};

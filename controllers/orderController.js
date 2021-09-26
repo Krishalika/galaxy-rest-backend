@@ -3,23 +3,10 @@ const {
   addOrderService,
   getOrdersByIdService,
 } = require("../services/orderServices");
+const { orderValidation } = require("../models/order.model");
 
 const addOrder = async (req, res) => {
-  const schema = Joi.object({
-    customerName: Joi.string().required(),
-    idNumber: Joi.string().required(),
-    foodItems: Joi.array()
-      .items(
-        Joi.object({
-          item: Joi.string().required(),
-          soldPrice: Joi.number().required(),
-          qty: Joi.number().required(),
-        })
-      )
-      .required(),
-    tableNumber: Joi.number().required(),
-  });
-  const validation = schema.validate(req.body);
+  const validation = orderValidation(req.body);
   if (validation.error) {
     res.status(401).send({ message: validation.error.message });
     return;
