@@ -9,6 +9,7 @@ const reviewRouter = require("./routes/review");
 const roomRouter = require("./routes/room");
 const orderRouter = require("./routes/orderRoutes");
 const categoryRouter = require("./routes/categoryRoutes");
+const waiterRouter = require("./routes/waiter");
 
 require("dotenv").config();
 
