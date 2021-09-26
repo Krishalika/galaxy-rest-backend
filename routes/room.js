@@ -2,7 +2,7 @@ const auth = require("../middleware/auth");
 const router = require("express").Router();
 const mongoose = require("mongoose");
 const _ = require("lodash");
-let { Room } = require("../models/room.model");
+let { Room } = require("../models/booking.model");
 
 router.get("/", (req, res) => {
   Room.find()
