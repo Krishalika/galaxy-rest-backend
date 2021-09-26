@@ -25,14 +25,16 @@ function validateFood(food) {
     status: Joi.string().required(),
     code: Joi.string().required(),
     description: Joi.string().min(3).max(500).required(),
-    price: Joi.number().positive().min(2),
-    category: Joi.string().min(2),
-    discount: Joi.number().min(0).max(100),
-    img: Joi.string(),
+    price: Joi.number().required().positive().min(2),
+    category: Joi.string().required().min(2),
+    discount: Joi.number().required().min(0).max(100),
+    img: Joi.string().required(),
     // rating:Joi.number().integer().positive().max(1)
   });
   return schema.validate(food);
 }
 
-exports.Food = Food;
-exports.validateFood = validateFood;
+// exports.Food = Food;
+// exports.validateFood = validateFood;
+
+module.exports={Food,validateFood}
