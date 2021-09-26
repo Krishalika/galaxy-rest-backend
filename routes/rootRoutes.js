@@ -9,8 +9,11 @@ router.use("/review", require("./review"));
 router.use("/rooms", require("./room"));
 router.use("/order", require("./orderRoutes"));
 router.use("/category", require("./categoryRoutes"));
+// router.use("/waiters", require("./waiters"));
 router.use("/waiters", require("./authWaiterRoutes"));
 router.use("/addWaiter", require("./waiter"));
+
+// router.use("/")
 
 // router.use("/")
 
