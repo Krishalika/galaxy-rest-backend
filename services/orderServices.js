@@ -1,4 +1,4 @@
-const Order = require("../models/order.model");
+const { Order } = require("../models/order.model");
 
 const addOrderService = async (orderDetails) => {
   try {
@@ -10,7 +10,7 @@ const addOrderService = async (orderDetails) => {
 
 const getOrdersByIdService = async (idNumber) => {
   try {
-    return await Order.find({ idNumber }).sort( { 'createdAt': -1 } );
+    return await Order.find({ idNumber }).sort({ createdAt: -1 });
   } catch (e) {
     throw e;
   }
