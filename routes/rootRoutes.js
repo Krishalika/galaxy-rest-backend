@@ -15,4 +15,6 @@ router.use("/addWaiter", require("./waiter"));
 
 // router.use("/")
 
+// router.use("/")
+
 module.exports = router;
