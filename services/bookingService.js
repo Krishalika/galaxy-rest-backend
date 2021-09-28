@@ -10,21 +10,18 @@ const _ = require("lodash");
 
 const addBookingService = async (req,res) => {
     try {
-    //   let newFood = await Food.findOne({ name: req.body.name });
-    //   if (newFood) return res.status(400).send("Food Item already added.");
       newBooking = new Booking(
         _.pick(req.body, [
           "customerName",
           "startDate",
           "endDate",
           "room",
-         
+          "customerEmail",
+          "customerContactNumber",
         ])
       );
   
       await newBooking.save();
-      // res.send(_.pick(newFood, ['_id', 'name','description','price','rating']));
-      res.json(_.pick(newBooking, ["_id", "name", "startDate", "endDate","room"]));
     } catch (e) {
       throw e;
     }

@@ -3,7 +3,7 @@ const _ = require("lodash");
 
 const getFoodByCategoryService = async (category) => {
   try {
-    return await Food.find({ category });
+    return await Food.find({ category, "status": "Available" });
   } catch (e) {
     throw e;
   }

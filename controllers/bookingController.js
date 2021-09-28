@@ -4,11 +4,11 @@ const {getBookingsService,addBookingService
 let { validateBooking } = require("../models/booking.model");
 
 const addBooking = async (req, res) => {
-  
-    // const validation = validateBooking(req.body);
-    // if (validation.error) {
-    //   return res.status(400).json(validation.error.message);
-    // }
+    const validation = validateBooking(req.body);
+    if (validation.error) {
+      res.status(401).send({ message: validation.error.message });
+      return;
+    }
   try {
     await addBookingService(req,res);
     res.status(200).send({ message: "Booking Placed Succesfully" });

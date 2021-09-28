@@ -3,50 +3,48 @@ const Joi = require("joi");
 
 const roomSchema = new mongoose.Schema(
   {
-   
     roomNo: { type: Number, required: true },
     status: { type: String, required: true, minLength: 3 },
     bedCount: { type: Number, required: true },
   }
 );
 
-
 const bookingSchema = new mongoose.Schema(
   {
     customerName: {
       type: String,
       required: true,
-
+    },
+    customerEmail: {
+      type: String,
+      required: false,
+    },
+    customerContactNumber: {
+      type: String,
+      required: false,
     },
     startDate: {
       type: Date,
       required: true,
      
     },
-    // room: 
-    //   {
-    //     type: mongoose.Types.ObjectId, 
-    //     ref: "Room" 
-       
-    //   },
-    room:roomSchema,
     endDate: {
       type: Date,
       required: true,
     },
-   
+    room:{type: mongoose.Types.ObjectId, ref: "rooms"},
   },
   { timestamps: true }
 );
+
 function validateBooking(booking) {
     const schema = Joi.object({
     customerName: Joi.string().min(3).max(50).required(),
-    startDate: Joi.date().min('now').required(),
-    endDate: Joi.date().min('now').required(),
-    room: Joi.object({
-      roomNo: Joi.number().positive().required(),
-    })
-      
+    customerEmail: Joi.string().min(3).max(50),
+    customerContactNumber: Joi.string().min(3).max(50),
+    startDate: Joi.date().required(),
+    endDate: Joi.date().required(),
+    room: Joi.string().min(3),
     });
   
     return schema.validate(booking);
