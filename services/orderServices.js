@@ -16,4 +16,12 @@ const getOrdersByIdService = async (idNumber) => {
   }
 };
 
-module.exports = { addOrderService, getOrdersByIdService };
+const getOrdersService = async (orderDetails) => {
+  try {
+    return await Order.find();
+  } catch (e) {
+    throw e;
+  }
+};
+
+module.exports = { addOrderService, getOrdersByIdService, getOrdersService };

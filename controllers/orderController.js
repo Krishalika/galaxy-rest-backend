@@ -2,6 +2,7 @@ const Joi = require("joi");
 const {
   addOrderService,
   getOrdersByIdService,
+  getOrdersService,
 } = require("../services/orderServices");
 const { orderValidation } = require("../models/order.model");
 
@@ -28,4 +29,13 @@ const getOrdersById = async (req, res) => {
   }
 };
 
-module.exports = { addOrder, getOrdersById };
+const getOrders = async (req, res) => {
+  try {
+    const orders = await getOrdersService();
+    res.status(200).send(orders);
+  } catch (error) {
+    res.status(error.status || 401).send({ message: error.message });
+  }
+};
+
+module.exports = { addOrder, getOrdersById, getOrders };
