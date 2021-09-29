@@ -49,4 +49,14 @@ router.post("/signup", async (req, res) => {
   }
 });
 
+// router.delete("/:id", async (req, res) => {
+//   try{
+//     const waiter = await Waiter.findByIdAndRemove(req.params.id)
+//   }
+  
+//   catch (error) {
+//     res.status(error.status || 400).send({ message: error.message });
+//   }
+// });
 module.exports = router;
+
