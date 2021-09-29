@@ -16,5 +16,20 @@ const customerAddHotelReviewService = async (reviewDetails) => {
   }
 };
 
+const updateHotelReviewService = async (req,res) => {
+  try {
+    let review = await Review.findByIdAndUpdate(req.params.id, {
+      name: req.body.name,
+      rating: Number(req.body.rating),
+      review: req.body.review,
+      reply:req.body.reply
+      
+    });
+    res.json(review);
+  } catch (e) {
+    throw e;
+  }
+};
 
-module.exports = { getReview, customerAddHotelReviewService };
+
+module.exports = { getReview, customerAddHotelReviewService,updateHotelReviewService };

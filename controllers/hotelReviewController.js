@@ -1,5 +1,5 @@
 const Joi = require("joi");
-const { getReview, customerAddHotelReviewService } = require("../services/hotelReviewServices");
+const { getReview, customerAddHotelReviewService,updateHotelReviewService } = require("../services/hotelReviewServices");
 
 const getHotelReview = async (req, res) => {
   try {
@@ -29,4 +29,22 @@ const customerAddHotelReview = async (req, res) => {
   }
 };
 
-module.exports = {getHotelReview, customerAddHotelReview};
+const updateHotelReview = async (req, res) => {
+  const schema = Joi.object({
+    review: Joi.string().required().min(5),
+    name: Joi.string().required(),
+    rating: Joi.number().required(),
+    reply:Joi.string().required().min(3)
+  });
+  const validation = schema.validate(req.body);
+  if (validation.error) {
+    return res.status(400).json(validation.error.details[0].message);
+  }
+  try {
+    const review = await updateHotelReviewService(req,res);
+  } catch (error) {
+    res.status(error.status || 422).send({ message: error.message });
+  }
+};
+
+module.exports = {getHotelReview, customerAddHotelReview,updateHotelReview};
