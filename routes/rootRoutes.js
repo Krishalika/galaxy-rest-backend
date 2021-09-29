@@ -12,12 +12,4 @@ router.use("/category", require("./categoryRoutes"));
 router.use("/waiters", require("./authWaiterRoutes"));
 router.use("/addWaiter", require("./waiter"));
 
-// router.use("/")
-
-// router.use("/")
-
-// router.use("/")
-
-// router.use("/")
-
 module.exports = router;
