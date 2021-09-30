@@ -3,6 +3,7 @@ const {
   addOrderService,
   getOrdersByIdService,
   getOrdersService,
+  updateOrderService,
 } = require("../services/orderServices");
 const { orderValidation } = require("../models/order.model");
 
@@ -38,4 +39,37 @@ const getOrders = async (req, res) => {
   }
 };
 
-module.exports = { addOrder, getOrdersById, getOrders };
+const updateOrder = async (req, res) => {
+  const validation = validateOrder(req.body);
+  if (validation.error) {
+    return res.status(400).json(validation.error.details[0].message);
+  }
+  try {
+    const order = await updateOrderService(req, res);
+  } catch (error) {
+    res.status(error.status || 422).send({ message: error.message });
+  }
+};
+
+const deleteOrder = async (req, res) => {
+  try {
+    const food = await deleteFoodService(req.params.id);
+    res.status(200).send(food);
+  } catch (error) {
+    res.status(error.status || 400).send({ message: error.message });
+  }
+};
+
+// const updateFood = async (req, res) => {
+//   const validation = validateFood(req.body);
+//   if (validation.error) {
+//     return res.status(400).json(validation.error.details[0].message);
+//   }
+//   try {
+//     const food = await updateFoodService(req, res);
+//   } catch (error) {
+//     res.status(error.status || 422).send({ message: error.message });
+//   }
+// };
+
+module.exports = { addOrder, getOrdersById, getOrders, updateOrder };

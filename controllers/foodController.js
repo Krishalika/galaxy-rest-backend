@@ -6,6 +6,7 @@ const {
   updateFoodService,
   getFoodbyCodeService,
   getFoodbyNameService,
+  getFoodbyIDService,
 } = require("../services/foodServices");
 let { validateFood } = require("../models/food.model");
 
@@ -78,6 +79,15 @@ const getFoodByName = async (req, res) => {
   }
 };
 
+const getFoodByID = async (req, res) => {
+  try {
+    const food = await getFoodbyIDService(req.query._id);
+    res.status(200).send(food);
+  } catch (error) {
+    res.status(error.status || 401).send({ message: error.message });
+  }
+};
+
 module.exports = {
   getFoodByCategory,
   getFood,
@@ -86,4 +96,5 @@ module.exports = {
   updateFood,
   getFoodByCode,
   getFoodByName,
+  getFoodByID,
 };

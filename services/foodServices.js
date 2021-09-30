@@ -104,6 +104,14 @@ const getFoodbyNameService = async (name) => {
   }
 };
 
+const getFoodbyIDService = async (_id) => {
+  try {
+    return await Food.find({ _id, status: "Available" });
+  } catch (e) {
+    throw e;
+  }
+};
+
 module.exports = {
   getFoodByCategoryService,
   getFoodService,
@@ -112,4 +120,5 @@ module.exports = {
   updateFoodService,
   getFoodbyCodeService,
   getFoodbyNameService,
+  getFoodbyIDService,
 };
