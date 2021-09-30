@@ -11,7 +11,7 @@ const getFoodByCategoryService = async (category) => {
 
 const getFoodService = async () => {
   try {
-    return await Food.find().sort("category");
+    return await Food.find().sort({"category":1,'code':1});
   } catch (e) {
     throw e;
   }

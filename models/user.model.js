@@ -32,7 +32,8 @@ const userSchema = new mongoose.Schema({
   contactNo: {
     type: Number,
     required: true,
-    maxlength: 9,
+    minlength: 12,
+    maxlength: 12,
   },
 });
 

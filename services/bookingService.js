@@ -29,7 +29,7 @@ const addBookingService = async (req,res) => {
 
 const getBookingsService = async () => {
   try {
-    return await Booking.find();
+    return await Booking.find().sort({'startDate':-1});
   } catch (e) {
     throw e;
   }
