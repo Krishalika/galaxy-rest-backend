@@ -1,65 +1,30 @@
 const {
-  getTableResService,
   addTableResService,
-  deleteTableResService,
-} = require("../services/foodServices");
-let { validateFood } = require("../models/food.model");
+  getTableResService,
+} = require("../services/tableResServices");
+let { validateTableReservation } = require("../models/tableReservation.model");
 
-const getFoodByCategory = async (req, res) => {
+const addTableRes = async (req, res) => {
+  const validation = validateTableReservation(req.body);
+  if (validation.error) {
+    res.status(401).send({ message: validation.error.message });
+    return;
+  }
   try {
-    const food = await getFoodByCategoryService(req.query.category);
-    res.status(200).send(food);
+    await addTableResService(req, res);
+    res.status(200).send({ message: "Reservation Placed Succesfully" });
   } catch (error) {
     res.status(error.status || 401).send({ message: error.message });
   }
 };
 
-const getFood = async (req, res) => {
+const getTableRes = async (req, res) => {
   try {
-    const food = await getFoodService();
-    res.status(200).send(food);
+    const orders = await getTableResService();
+    res.status(200).send(orders);
   } catch (error) {
-    res.status(error.status || 422).send({ message: error.message });
+    res.status(error.status || 401).send({ message: error.message });
   }
 };
 
-const addFood = async (req, res) => {
-  const validation = validateFood(req.body);
-  if (validation.error) {
-    return res.status(400).json(validation.error.details[0].message);
-  }
-  try {
-    const food = await addFoodService(req, res);
-  } catch (err) {
-    return res.status(422).send(err.message);
-  }
-};
-
-const deleteFood = async (req, res) => {
-  try {
-    const food = await deleteFoodService(req.params.id);
-    res.status(200).send(food);
-  } catch (error) {
-    res.status(error.status || 400).send({ message: error.message });
-  }
-};
-
-const updateFood = async (req, res) => {
-  const validation = validateFood(req.body);
-  if (validation.error) {
-    return res.status(400).json(validation.error.details[0].message);
-  }
-  try {
-    const food = await updateFoodService(req, res);
-  } catch (error) {
-    res.status(error.status || 422).send({ message: error.message });
-  }
-};
-
-module.exports = {
-  getFoodByCategory,
-  getFood,
-  addFood,
-  deleteFood,
-  updateFood,
-};
+module.exports = { addTableRes, getTableRes };
