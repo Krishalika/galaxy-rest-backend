@@ -3,7 +3,7 @@ const _ = require("lodash");
 
 const getFoodByCategoryService = async (category) => {
   try {
-    return await Food.find({ category, "status": "Available" });
+    return await Food.find({ category, status: "Available" });
   } catch (e) {
     throw e;
   }
@@ -17,7 +17,7 @@ const getFoodService = async () => {
   }
 };
 
-const addFoodService = async (req,res) => {
+const addFoodService = async (req, res) => {
   try {
     let newFood = await Food.findOne({ name: req.body.name });
     if (newFood) return res.status(400).send("Food Item already added.");
@@ -36,7 +36,19 @@ const addFoodService = async (req,res) => {
 
     await newFood.save();
     // res.send(_.pick(newFood, ['_id', 'name','description','price','rating']));
-    res.json(_.pick(newFood, ["_id", "name", "description", "price","status", "code","category", "img","discount"]));
+    res.json(
+      _.pick(newFood, [
+        "_id",
+        "name",
+        "description",
+        "price",
+        "status",
+        "code",
+        "category",
+        "img",
+        "discount",
+      ])
+    );
   } catch (e) {
     throw e;
   }
@@ -44,24 +56,23 @@ const addFoodService = async (req,res) => {
 
 const deleteFoodService = async (id) => {
   try {
-    return await Food.findByIdAndRemove(id)
+    return await Food.findByIdAndRemove(id);
   } catch (e) {
     throw e;
   }
 };
 
-
-const updateFoodService = async (req,res) => {
+const updateFoodService = async (req, res) => {
   try {
     let food = await Food.findByIdAndUpdate(req.params.id, {
       name: req.body.name,
       price: Number(req.body.price),
       description: req.body.description,
-      status:req.body.status,
+      status: req.body.status,
       code: req.body.code,
       discount: Number(req.body.discount),
       category: req.body.category,
-      img:req.body.img,
+      img: req.body.img,
     });
     res.json(food);
   } catch (e) {
@@ -69,5 +80,36 @@ const updateFoodService = async (req,res) => {
   }
 };
 
+const getFoodbyCodeService = async (code) => {
+  try {
+    return await Food.find({
+      code: { $regex: ".*" + code + ".*", $options: "i" },
+      status: "Available",
+    });
+  } catch (e) {
+    throw e;
+  }
+};
 
-module.exports = { getFoodByCategoryService ,getFoodService, addFoodService,deleteFoodService,updateFoodService};
+const getFoodbyNameService = async (name) => {
+  try {
+    return await Food.find({
+      //  db.collection.find({'name': {'$regex': thename,$options:'i'}});
+
+      name: { $regex: ".*" + name + ".*", $options: "i" },
+      status: "Available",
+    });
+  } catch (e) {
+    throw e;
+  }
+};
+
+module.exports = {
+  getFoodByCategoryService,
+  getFoodService,
+  addFoodService,
+  deleteFoodService,
+  updateFoodService,
+  getFoodbyCodeService,
+  getFoodbyNameService,
+};
