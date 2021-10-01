@@ -4,6 +4,7 @@ const {
   getOrdersByIdService,
   getOrdersService,
   updateOrderService,
+  deleteFoodService,
 } = require("../services/orderServices");
 const { orderValidation } = require("../models/order.model");
 
@@ -40,7 +41,7 @@ const getOrders = async (req, res) => {
 };
 
 const updateOrder = async (req, res) => {
-  const validation = validateOrder(req.body);
+  const validation = orderValidation(req.body);
   if (validation.error) {
     return res.status(400).json(validation.error.details[0].message);
   }
@@ -53,23 +54,17 @@ const updateOrder = async (req, res) => {
 
 const deleteOrder = async (req, res) => {
   try {
-    const food = await deleteFoodService(req.params.id);
-    res.status(200).send(food);
+    const order = await deleteFoodService(req.params.id);
+    res.status(200).send(order);
   } catch (error) {
     res.status(error.status || 400).send({ message: error.message });
   }
 };
 
-// const updateFood = async (req, res) => {
-//   const validation = validateFood(req.body);
-//   if (validation.error) {
-//     return res.status(400).json(validation.error.details[0].message);
-//   }
-//   try {
-//     const food = await updateFoodService(req, res);
-//   } catch (error) {
-//     res.status(error.status || 422).send({ message: error.message });
-//   }
-// };
-
-module.exports = { addOrder, getOrdersById, getOrders, updateOrder };
+module.exports = {
+  addOrder,
+  getOrdersById,
+  getOrders,
+  updateOrder,
+  deleteOrder,
+};

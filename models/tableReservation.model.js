@@ -1,14 +1,11 @@
 const Joi = require("joi");
 const mongoose = require("mongoose");
 
-const tableSchema = new mongoose.Schema(
-  {
-    seatCount: { type: Number, required: true },
-    status: { type: String, required: true, minLength: 3 },
-    tableNumber: { type: Number, required: true },
-  },
-  { timestamps: true }
-);
+const tableSchema = new mongoose.Schema({
+  seatCount: { type: Number, required: true },
+  status: { type: String, required: true, minLength: 3 },
+  tableNumber: { type: Number, required: true },
+});
 
 const tableResSchema = new mongoose.Schema({
   customerName: {
@@ -36,7 +33,7 @@ const tableResSchema = new mongoose.Schema({
     required: true,
   },
   price: {
-    type: float,
+    type: Number,
     required: true,
   },
   table: { type: mongoose.Types.ObjectId, ref: "tables" },
