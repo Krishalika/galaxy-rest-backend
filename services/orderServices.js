@@ -26,9 +26,7 @@ const getOrdersService = async (orderDetails) => {
 
 const updateOrderService = async (req, res) => {
   try {
-    // let order = await Order.findByIdAndUpdate(req.params.id, {
-
-    let order = await Order.useFindAndModify(req.params.id, {
+    let order = await Order.findByIdAndUpdate(req.params.id, {
       customerName: req.body.customerName,
       idNumber: req.body.idNumber,
       foodItems: req.body.foodItems,
@@ -41,21 +39,7 @@ const updateOrderService = async (req, res) => {
   }
 };
 
-// const updateOrderService = async (req, res) => {
-//   try {
-//     let order = await Order.findByIdAndUpdate(req.params.id, {
-//       name: req.body.name,
-//       rating: Number(req.body.rating),
-//       review: req.body.review,
-//       reply: req.body.reply,
-//     });
-//     res.json(order);
-//   } catch (e) {
-//     throw e;
-//   }
-// };
-
-const deleteFoodService = async (id) => {
+const deleteOrderService = async (id) => {
   try {
     return await Order.findByIdAndRemove(id);
   } catch (e) {
@@ -68,5 +52,5 @@ module.exports = {
   getOrdersByIdService,
   getOrdersService,
   updateOrderService,
-  deleteFoodService,
+  deleteOrderService,
 };

@@ -12,6 +12,6 @@ router.use("/category", require("./categoryRoutes"));
 router.use("/waiters", require("./authWaiterRoutes"));
 router.use("/addWaiter", require("./waiter"));
 router.use("/table", require("./table"));
-// router.use("/tableres", require("./tableReservation"));
+router.use("/tableres", require("./tableReservation"));
 
 module.exports = router;
