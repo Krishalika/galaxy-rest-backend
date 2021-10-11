@@ -16,6 +16,10 @@ describe('item validation process',()=>{
        }
 
     });
+    it("should return no validation issues", () => {
+        const result = validateFood(item);
+        expect(result.error).toBe(undefined);
+      });
     it('code cannot be empty',()=>{
         item.code=""
         const result = validateFood(item)

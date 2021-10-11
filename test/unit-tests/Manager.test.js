@@ -13,6 +13,10 @@ describe('manager object validation process',()=>{
        }
 
     });
+    it("should return no validation issues", () => {
+        const result = validate(item);
+        expect(result.error).toBe(undefined);
+      });
     it('name cannot be empty',()=>{
         item.name=""
         const result = validate(item)

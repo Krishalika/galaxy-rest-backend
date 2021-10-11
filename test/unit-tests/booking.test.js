@@ -11,6 +11,10 @@ describe('booking validation process',()=>{
             room:"abcd"
        }
     });
+    it("should return no validation issues", () => {
+        const result = validateBooking(item);
+        expect(result.error).toBe(undefined);
+      });
     it('customerName cannot be empty',()=>{
         item.customerName=""
         const result = validateBooking(item)
