@@ -40,8 +40,8 @@ const bookingSchema = new mongoose.Schema(
 function validateBooking(booking) {
     const schema = Joi.object({
     customerName: Joi.string().min(3).max(50).required(),
-    customerEmail: Joi.string().min(3).max(50),
-    customerContactNumber: Joi.string().min(3).max(50),
+    customerEmail: Joi.string().min(3).max(50).required().email(),
+    customerContactNumber: Joi.string().min(3).max(50).required(),
     startDate: Joi.date().required(),
     endDate: Joi.date().required(),
     room: Joi.string().min(3),
