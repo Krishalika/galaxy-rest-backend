@@ -2,14 +2,6 @@ const config = require("config");
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
-const userRouter = require("./routes/users");
-const foodRouter = require("./routes/food");
-const authRouter = require("./routes/authRoutes");
-const reviewRouter = require("./routes/review");
-const roomRouter = require("./routes/room");
-const orderRouter = require("./routes/orderRoutes");
-const categoryRouter = require("./routes/categoryRoutes");
-const waiterRouter = require("./routes/waiter");
 
 require("dotenv").config();
 
@@ -23,7 +15,7 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-const uri = process.env.ATLAS_URI;
+const uri = config.get("db")
 mongoose.connect(
   uri,
   {
@@ -39,16 +31,9 @@ mongoose.connect(
 );
 const connection = mongoose.connection;
 connection.once("open", () => {
-  console.log("mongodb connection established successfully");
+  console.log(`connected to ${uri}`);
 });
 
-/*app.use("/", userRouter);
-app.use("/food", foodRouter);
-app.use("/auth", authRouter);
-app.use("/review", reviewRouter);
-app.use("/rooms", roomRouter);
-app.use("/order", orderRouter);
-app.use("/category", categoryRouter);*/
 
 app.use("/", require("./routes/rootRoutes"));
 
@@ -56,4 +41,5 @@ const server = app.listen(port, () => {
   console.log(`server is running on port:${port}`);
 });
 
-module.exports = { app, server };
+// module.exports = { app, server };
+module.exports = {server,connection};

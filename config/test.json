@@ -1,0 +1,5 @@
+{
+    "jwtPrivateKey": "galaxyrest_jwtPrivateKey",
+    "db":"mongodb+srv://userGalaxy:GalaxyABC@cluster0.moymz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+  }
+  
