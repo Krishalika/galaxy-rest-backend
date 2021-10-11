@@ -1,3 +1,4 @@
 {
-  "jwtPrivateKey": "galaxyrest_jwtPrivateKey"
+  "jwtPrivateKey": "galaxyrest_jwtPrivateKey",
+  "db":"mongodb+srv://cnq:zBzeywTdb6L5tv6a@cluster0.mxnvn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 }
