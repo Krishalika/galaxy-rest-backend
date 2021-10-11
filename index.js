@@ -31,16 +31,22 @@ mongoose.connect(
   }
 );
 const connection = mongoose.connection;
-connection.once("open", () => {
-  console.log(`connected to ${uri}`);
-});
+if (process.env.NODE_ENV!='test'){
+  connection.once("open", () => {
+    console.log(`connected to MongoDB`);
+  });
+}
+
 
 
 app.use("/", require("./routes/rootRoutes"));
 
-const server = app.listen(port, () => {
-  console.log(`server is running on port:${port}`);
-});
+const server = app.listen(port);
+if (process.env.NODE_ENV=='test')
+{
+    server.close();
+}
 
-// module.exports = { app, server };
+
+// module.exports = server ;
 module.exports = {server,connection};
