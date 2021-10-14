@@ -42,8 +42,7 @@ const addFood = async (req, res) => {
 
 const deleteFood = async (req, res) => {
   try {
-    const food = await deleteFoodService(req.params.id);
-    res.status(200).send(food);
+    const food = await deleteFoodService(req.params.id,res);
   } catch (error) {
     res.status(error.status || 400).send({ message: error.message });
   }

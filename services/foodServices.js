@@ -54,9 +54,11 @@ const addFoodService = async (req, res) => {
   }
 };
 
-const deleteFoodService = async (id) => {
+const deleteFoodService = async (id,res) => {
   try {
-    return await Food.findByIdAndRemove(id);
+    let food= await Food.findByIdAndRemove(id);
+    if (!food) return res.status(404).send('The food with the given ID was not found.');
+    res.json(food);
   } catch (e) {
     throw e;
   }
@@ -73,7 +75,11 @@ const updateFoodService = async (req, res) => {
       discount: Number(req.body.discount),
       category: req.body.category,
       img: req.body.img,
+    }, {
+      new: true
     });
+    if (!food) return res.status(404).send('The food with the given ID was not found.');
+  
     res.json(food);
   } catch (e) {
     throw e;

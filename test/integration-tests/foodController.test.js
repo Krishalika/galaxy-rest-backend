@@ -94,5 +94,141 @@ describe('/food', () => {
       expect(res.body).toHaveProperty('discount',0);
     });
   });
+  describe('UPDATE /:id', () => {
+    let newName; 
+    let food; 
+    let id; 
+
+    const exec = async () => {
+      return await request(server)
+        .post('/food/update/' + id)
+        .send({ name:newName,description,price,code,category,status,img,discount});
+        
+    }
+
+    beforeEach(async () => {
+      // Before each test we need to create a food and 
+      // put it in the database.      
+      food = new Food({ name: "MilkShake",
+      description: "Cool",
+      price: 150.65,
+      code:"D100",
+      category:"Drinks",
+      status:"Available",
+      img:"https://www.google.com",
+      discount: 0 });
+      await food.save();
+     
+      id = food._id; 
+      newName = 'updatedName'; 
+    })
+
+
+    it('should return 400 if food is less than 3 characters', async () => {
+      newName = 'fo'; description= "Cool";price= 150.65;code="D100";category="Drinks",status="Available";img="https://www.google.com";
+      discount= 0
+      
+      const res = await exec();
+
+      expect(res.status).toBe(400);
+    });
+
+    it('should return 400 if food is more than 50 characters', async () => {
+      newName = new Array(52).join('a');description= "Cool";price= 150.65;code="D100";category="Drinks",status="Available";img="https://www.google.com";
+      discount= 0
+
+      const res = await exec();
+
+      expect(res.status).toBe(400);
+    });
+
+    it('should return 404 if id is invalid', async () => {
+      id = 1;
+
+      const res = await exec();
+
+      expect(res.status).toBe(404);
+    });
+
+    it('should return 404 if food with the given id was not found', async () => {
+      id = mongoose.Types.ObjectId();
+
+      const res = await exec();
+
+      expect(res.status).toBe(404);
+    });
+
+    it('should update the food if input is valid', async () => {
+      await exec();
+
+      const updatedfood = await Food.findById(food._id);
+
+      expect(updatedfood.name).toBe(newName);
+    });
+
+    it('should return the updated food if it is valid', async () => {
+      const res = await exec();
+
+      expect(res.body).toHaveProperty('_id');
+      expect(res.body).toHaveProperty('name', newName);
+    });
+  });  
+
+  describe('DELETE /:id', () => { 
+    let food; 
+    let id; 
+
+    const exec = async () => {
+      return await request(server)
+        .delete('/food/' + id)
+        .send();
+    }
+
+    beforeEach(async () => {
+      // Before each test we need to create a food and 
+      // put it in the database.      
+      food = new Food({ name: "MilkShake",
+      description: "Cool",
+      price: 150.65,
+      code:"D100",
+      category:"Drinks",
+      status:"Available",
+      img:"https://www.google.com",
+      discount: 0});
+
+      await food.save(); 
+      id = food._id;    
+    })
+
+    it('should return 404 if id is invalid', async () => {
+      id = 1; 
+      
+      const res = await exec();
+
+      expect(res.status).toBe(404);
+    });
+    it('should return 404 if no food with the given id was found', async () => {
+      id = mongoose.Types.ObjectId();
+
+      const res = await exec();
+
+      expect(res.status).toBe(404);
+    });
+    
+    it('should delete the food if input is valid', async () => {
+      await exec();
+
+      const foodInDb = await Food.findById(id);
+
+      expect(foodInDb).toBeNull();
+    });
+    
+    it('should return the removed food', async () => {
+      const res = await exec();
+
+      expect(res.body).toHaveProperty('_id', food._id.toHexString());
+      expect(res.body).toHaveProperty('name', food.name);
+    });
+  });  
   
 });
