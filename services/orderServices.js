@@ -62,9 +62,18 @@ const deleteFoodService = async (id) => {
   }
 };
 
+const cancelOrderService = async (id)=>{
+  try {
+    await Order.findByIdAndUpdate(id, {state: "Canceled",});
+  } catch (e) {
+    throw e;
+  }
+}
+
 module.exports = {
   addOrderService,
   getOrdersByIdService,
   getOrdersService,
   updateOrderService,
+  cancelOrderService
 };
