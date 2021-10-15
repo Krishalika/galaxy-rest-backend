@@ -66,4 +66,8 @@ function validateWaiter(waiter) {
 }
 
 exports.Waiter = Waiter;
-exports.validate = validateWaiter;
+// exports.validate = validateWaiter;
+
+module.exports = {
+  validateWaiter,
+};
