@@ -1,5 +1,4 @@
 const router = require("express").Router();
-const mongoose = require("mongoose");
 const _ = require("lodash");
 let { Table } = require("../models/table.model");
 

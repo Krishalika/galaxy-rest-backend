@@ -5,6 +5,7 @@ const {
   getOrdersService,
   updateOrderService,
   cancelOrderService,
+  deleteOrderService,
 } = require("../services/orderServices");
 const { orderValidation } = require("../models/order.model");
 
@@ -41,7 +42,22 @@ const getOrders = async (req, res) => {
 };
 
 const updateOrder = async (req, res) => {
-  const validation = validateOrder(req.body);
+  const schema = Joi.object({
+    customerName: Joi.string().required(),
+    idNumber: Joi.string().required(),
+    foodItems: Joi.array()
+      .items(
+        Joi.object({
+          item: Joi.string().required(),
+          soldPrice: Joi.number().required(),
+          qty: Joi.number().required(),
+        })
+      )
+      .required(),
+    state: Joi.string().required(),
+    tableNumber: Joi.number().required(),
+  });
+  const validation = schema.validate(req.body);
   if (validation.error) {
     return res.status(400).json(validation.error.details[0].message);
   }
@@ -54,12 +70,13 @@ const updateOrder = async (req, res) => {
 
 const deleteOrder = async (req, res) => {
   try {
-    const food = await deleteFoodService(req.params.id);
-    res.status(200).send(food);
+    const order = await deleteOrderService(req.params.id);
+    res.status(200).send(order);
   } catch (error) {
     res.status(error.status || 400).send({ message: error.message });
   }
 };
+
 
 // const updateFood = async (req, res) => {
 //   const validation = validateFood(req.body);
@@ -72,6 +89,7 @@ const deleteOrder = async (req, res) => {
 //     res.status(error.status || 422).send({ message: error.message });
 //   }
 // };
+
 const cancelOrder = async (req, res) => {
   try {
     await cancelOrderService(req.params.id);
@@ -81,4 +99,5 @@ const cancelOrder = async (req, res) => {
   }
 };
 
-module.exports = { addOrder, getOrdersById, getOrders, updateOrder, cancelOrder };
+module.exports = { addOrder, getOrdersById, getOrders, updateOrder, cancelOrder,deleteOrder };
+
