@@ -4,6 +4,7 @@ const {
   getOrdersByIdService,
   getOrdersService,
   updateOrderService,
+  cancelOrderService,
   deleteOrderService,
 } = require("../services/orderServices");
 const { orderValidation } = require("../models/order.model");
@@ -76,10 +77,27 @@ const deleteOrder = async (req, res) => {
   }
 };
 
-module.exports = {
-  addOrder,
-  getOrdersById,
-  getOrders,
-  updateOrder,
-  deleteOrder,
+
+// const updateFood = async (req, res) => {
+//   const validation = validateFood(req.body);
+//   if (validation.error) {
+//     return res.status(400).json(validation.error.details[0].message);
+//   }
+//   try {
+//     const food = await updateFoodService(req, res);
+//   } catch (error) {
+//     res.status(error.status || 422).send({ message: error.message });
+//   }
+// };
+
+const cancelOrder = async (req, res) => {
+  try {
+    await cancelOrderService(req.params.id);
+    res.status(200).send({ message: "Order Cancled Succesfully" });
+  } catch (error) {
+    res.status(error.status || 400).send({ message: error.message });
+  }
 };
+
+module.exports = { addOrder, getOrdersById, getOrders, updateOrder, cancelOrder,deleteOrder };
+
