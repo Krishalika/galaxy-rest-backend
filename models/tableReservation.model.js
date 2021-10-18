@@ -49,7 +49,7 @@ function validateTableReservation(reservation) {
     startTime: Joi.string().required(),
     endTime: Joi.string().required(),
     price: Joi.number().required().positive().min(2),
-    table: Joi.string().min(3),
+    table: Joi.string().min(1),
   });
 
   return schema.validate(reservation);

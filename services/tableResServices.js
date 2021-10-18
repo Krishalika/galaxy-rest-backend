@@ -30,4 +30,7 @@ const getTableResService = async () => {
   }
 };
 
-module.exports = { addTableResService, getTableResService };
+module.exports = {
+  addTableResService,
+  getTableResService,
+};
