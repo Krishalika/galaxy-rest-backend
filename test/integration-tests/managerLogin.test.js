@@ -6,7 +6,7 @@ let {connection}=require('../../index');
 
 server.close()
 
-describe('/ManagerSignUp', () => {
+describe('/ManagerLogin', () => {
   beforeEach(() => server)
   afterEach(async () => { 
     server.close(); 
