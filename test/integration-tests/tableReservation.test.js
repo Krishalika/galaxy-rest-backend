@@ -54,4 +54,62 @@ describe("/tableres", () => {
       ).toBeTruthy();
     });
   });
+
+  describe("POST /", () => {
+    let table;
+    let customerName;
+    let date;
+    let startTime;
+    let endTime;
+    let price;
+    // let customerContactNumber;
+    let customerEmail;
+
+    const exec = async () => {
+      return await request(server).post("/tableres/add").send({
+        table,
+        customerName,
+        date,
+        startTime,
+        endTime,
+        price,
+        // customerContactNumber,
+        customerEmail,
+      });
+    };
+
+    beforeEach(() => {
+      table = "5";
+      customerName = "Nirmala";
+      date = "2021-10-31";
+      startTime = "8:00 pm";
+      endTime = "9:00 pm";
+      price = 4500;
+        customerContactNumber = 940721256739;
+      customerEmail = "nirmala@gmail.com";
+    });
+
+    it("should save the table reservation if it is valid", async () => {
+      await exec();
+      const tableReserve = await TableReservation.find({
+        customerName: "Nirmala",
+      });
+      expect(tableReserve).not.toBeNull();
+    });
+
+    it('should return the table reservation if it is valid', async () => {
+        const res = await exec();
+
+        expect(res.body).toHaveProperty('table', '5');
+        expect(res.body).toHaveProperty('customerName', 'Nirmala');
+        expect(res.body).toHaveProperty('date', "2021-10-31");
+        expect(res.body).toHaveProperty('startTime', "8:00 pm");
+        expect(res.body).toHaveProperty('endTime', "9:00 pm");
+        expect(res.body).toHaveProperty('price', 4500);
+        expect(res.body).toHaveProperty('customerContactNumber', 940721256739);
+
+        expect(res.body).toHaveProperty('customerEmail', "nirmala@gmail.com");
+      });
+   
+  });
 });
