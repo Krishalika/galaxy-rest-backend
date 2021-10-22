@@ -230,5 +230,77 @@ describe('/food', () => {
       expect(res.body).toHaveProperty('name', food.name);
     });
   });  
+  describe('GET /:id', () => {
+    it('should return a food item if valid id is passed', async () => {
+      food = new Food({ name: "MilkShake",
+      description: "Cool",
+      price: 150.65,
+      code:"D100",
+      category:"Drinks",
+      status:"Available",
+      img:"https://www.google.com",
+      discount: 0 });
+      await food.save();
+
+      const res = await request(server).get('/food/by-id');
+
+      expect(res.status).toBe(200); 
+    });
+
+  });
+  describe('GET /byCategory', () => {
+    it('should return a food item if valid id is passed', async () => {
+      food = new Food({ name: "MilkShake",
+      description: "Cool",
+      price: 150.65,
+      code:"D100",
+      category:"Drinks",
+      status:"Available",
+      img:"https://www.google.com",
+      discount: 0 });
+      await food.save();
+
+      const res = await request(server).get('/food/by-category');
+
+      expect(res.status).toBe(200); 
+    });
+
+  });
+  describe('GET /byName', () => {
+    it('should return a food item if valid id is passed', async () => {
+      food = new Food({ name: "MilkShake",
+      description: "Cool",
+      price: 150.65,
+      code:"D100",
+      category:"Drinks",
+      status:"Available",
+      img:"https://www.google.com",
+      discount: 0 });
+      await food.save();
+
+      const res = await request(server).get('/food/by-name');
+
+      expect(res.status).toBe(200); 
+    });
+
+  });
+  describe('GET /byCode', () => {
+    it('should return a food item if valid id is passed', async () => {
+      food = new Food({ name: "MilkShake",
+      description: "Cool",
+      price: 150.65,
+      code:"D100",
+      category:"Drinks",
+      status:"Available",
+      img:"https://www.google.com",
+      discount: 0 });
+      await food.save();
+
+      const res = await request(server).get('/food/by-code');
+
+      expect(res.status).toBe(200); 
+    });
+
+  });
   
 });

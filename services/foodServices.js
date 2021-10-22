@@ -20,7 +20,7 @@ const getFoodService = async () => {
 const addFoodService = async (req, res) => {
   try {
     let newFood = await Food.findOne({ name: req.body.name });
-    if (newFood) return res.status(400).send("Food Item already added.");
+    // if (newFood) return res.status(400).send("Food Item already added.");
     newFood = new Food(
       _.pick(req.body, [
         "name",
