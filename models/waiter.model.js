@@ -65,9 +65,10 @@ function validateWaiter(waiter) {
   return schema.validate(waiter);
 }
 
-exports.Waiter = Waiter;
+//exports.Waiter = Waiter;
 // exports.validate = validateWaiter;
 
 module.exports = {
+  Waiter,
   validateWaiter,
 };
