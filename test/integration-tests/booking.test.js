@@ -93,14 +93,6 @@ describe('/booking', () => {
       const res = await exec();
       // expect(res.status).toBe(200);
       expect(res.body).toHaveProperty("message",'Booking Placed Succesfully');
-    //   expect(res.body).toHaveProperty('name', 'MilkShake');
-    //   expect(res.body).toHaveProperty('description', 'Cool');
-    //   expect(res.body).toHaveProperty('price', 150.65);
-    //   expect(res.body).toHaveProperty('code', 'D100');
-    //   expect(res.body).toHaveProperty('category', 'Drinks');
-    //   expect(res.body).toHaveProperty('status', 'Available');
-    //   expect(res.body).toHaveProperty('img', 'https://www.google.com');
-    //   expect(res.body).toHaveProperty('discount',0);
     });
   });
  
