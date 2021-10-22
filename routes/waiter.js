@@ -10,10 +10,10 @@ const mongoose = require("mongoose");
 const express = require("express");
 const router = express.Router();
 
-router.get("/me", auth, async (req, res) => {
-  const waiter = await Waiter.findById(req.waiter._id).select("-password");
-  res.send(waiter);
-});
+// router.get("/me", auth, async (req, res) => {
+//   const waiter = await Waiter.findById(req.waiter._id).select("-password");
+//   res.send(waiter);
+// });
 
 router.post("/signup", async (req, res) => {
   const validation = validate(req.body);
@@ -38,12 +38,12 @@ router.post("/signup", async (req, res) => {
     user.password = await bcrypt.hash(user.password, salt);
     await user.save();
 
-    const token = user.generateAuthToken();
-    res
-      .header("x-auth-token", token)
-      .json(
-        _.pick(user, ["_id", "name", "email", "nic", "contactNo", "salary"])
-      );
+    // const token = user.generateAuthToken();
+    // res
+    //   .header("x-auth-token", token)
+    //   .json(
+    //     _.pick(user, ["_id", "name", "email", "nic", "contactNo", "salary"])
+    //   );
   } catch (err) {
     return res.status(422).json(err.message);
   }
