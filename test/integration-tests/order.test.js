@@ -132,15 +132,80 @@ describe('/order', () => {
     it('should delete the order if input is valid', async () => {
         const res =await exec();
       expect(res.status).toBe(200);
-    //   const orderInDb = await Order.findById(id);
-
-    //   expect(orderInDb).toBeNull();
     });
-    
-    // it('should return the removed order', async () => {
+  });  
+  describe('UPDATE /:id', () => {
+    let newName; 
+    let order; 
+    let id; 
+
+    const exec = async () => {
+      return await request(server)
+        .post('/order/update/' + id)
+        .send({ customerName:newName,idNumber,tableNumber,foodItems});
+        
+    }
+
+    beforeEach(async () => {
+      // Before each test we need to create a food and 
+      // put it in the database.      
+      order = new Order({ 
+        customerName:"Kasun",
+        idNumber:"973221337v",
+        tableNumber: 5,
+        foodItems: [
+          { item: "613864d3f106b435b0a54864", soldPrice: 250.0, qty: 4 },
+          { item: "6138657df106b435b0a54868", soldPrice: 257.35, qty: 4 },
+        ]
+      });
+      await order.save();
+     
+      id = order._id; 
+      newName = 'updatedName'; 
+    })
+
+
+    it('should return 400 if order is less than 3 characters', async () => {
+      newName = 'fo';idNumber="973221337v",tableNumber=5,foodItems= [
+        { item: "613864d3f106b435b0a54864", soldPrice: 250.0, qty: 4 },
+        { item: "6138657df106b435b0a54868", soldPrice: 257.35, qty: 4 },
+      ]
+      
+      const res = await exec();
+
+      expect(res.status).toBe(400);
+    });
+
+
+    // it('should return 404 if id is invalid', async () => {
+    //   id = 1;
+
     //   const res = await exec();
 
-    //   expect(res.body).toHaveProperty('_id', order._id.toHexString());
+    //   expect(res.status).toBe(404);
+    // });
+
+    // it('should return 404 if food with the given id was not found', async () => {
+    //   id = mongoose.Types.ObjectId();
+
+    //   const res = await exec();
+
+    //   expect(res.status).toBe(404);
+    // });
+
+    // it('should update the food if input is valid', async () => {
+    //   await exec();
+
+    //   const updatedfood = await Food.findById(food._id);
+
+    //   expect(updatedfood.name).toBe(newName);
+    // });
+
+    // it('should return the updated food if it is valid', async () => {
+    //   const res = await exec();
+
+    //   expect(res.body).toHaveProperty('_id');
+    //   expect(res.body).toHaveProperty('name', newName);
     // });
   });  
   
