@@ -30,4 +30,30 @@ describe("/table", () => {
       expect(res.body.some((g) => g.tableNumber === 7)).toBeTruthy();
     });
   });
+  describe('GET /:id', () => {
+    it('should return a table if valid id is passed', async () => {
+      table= new Table({ 
+        seatCount: 5, status: "reserved", tableNumber: 7 
+      });
+      await table.save();
+
+      const res = await request(server).get('/table/by-id');
+
+      expect(res.status).toBe(200); 
+    });
+
+  });
+  describe('GET /tableNo', () => {
+    it('should return a table if valid id is passed', async () => {
+      table= new Table({ 
+        seatCount: 5, status: "reserved", tableNumber: 7 
+      });
+      await table.save();
+
+      const res = await request(server).get('/table/by-tableNo');
+
+      expect(res.status).toBe(200); 
+    });
+
+  });
 });
