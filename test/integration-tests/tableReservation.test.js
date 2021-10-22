@@ -73,20 +73,35 @@ describe("/tableres", () => {
         startTime,
         endTime,
         price,
-        // customerContactNumber,
+        customerContactNumber,
         customerEmail,
       });
     };
 
     beforeEach(() => {
-      table = "5";
+      table = mongoose.Types.ObjectId();;
       customerName = "Nirmala";
       date = "2021-10-31";
       startTime = "8:00 pm";
       endTime = "9:00 pm";
       price = 4500;
-        customerContactNumber = 940721256739;
+      customerContactNumber = "940721256739";
       customerEmail = "nirmala@gmail.com";
+    });
+    
+    it('should return 401 if name is less than 3 characters', async () => {
+      table = mongoose.Types.ObjectId();;
+      customerName = "Ni";
+      date = "2021-10-31";
+      startTime = "8:00 pm";
+      endTime = "9:00 pm";
+      price = 4500;
+      customerContactNumber = "940721256739";
+      customerEmail = "nirmala@gmail.com";
+      
+      const res = await exec();
+
+      expect(res.status).toBe(401);
     });
 
     it("should save the table reservation if it is valid", async () => {
@@ -97,19 +112,10 @@ describe("/tableres", () => {
       expect(tableReserve).not.toBeNull();
     });
 
-    // it('should return the table reservation if it is valid', async () => {
-    //     const res = await exec();
-
-    //     expect(res.body).toHaveProperty('table', '5');
-    //     expect(res.body).toHaveProperty('customerName', 'Nirmala');
-    //     expect(res.body).toHaveProperty('date', "2021-10-31");
-    //     expect(res.body).toHaveProperty('startTime', "8:00 pm");
-    //     expect(res.body).toHaveProperty('endTime', "9:00 pm");
-    //     expect(res.body).toHaveProperty('price', 4500);
-    //     expect(res.body).toHaveProperty('customerContactNumber', 940721256739);
-
-    //     expect(res.body).toHaveProperty('customerEmail', "nirmala@gmail.com");
-    //   });
+    it('should return the table reservation if it is valid', async () => {
+        const res = await exec();
+        expect(res.body).toHaveProperty("message",'Reservation Placed Succesfully');
+      });
    
   });
 });
