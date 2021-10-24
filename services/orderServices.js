@@ -16,14 +16,6 @@ const getOrdersByIdService = async (idNumber) => {
   }
 };
 
-// const getOrdersByDetailsIdService = async () => {
-//   try {
-//     return await Order.find().populate(["foodItems.item"]);
-//   } catch (e) {
-//     throw e;
-//   }
-// };
-
 const getOrdersService = async (orderDetails) => {
   try {
     return await Order.find().populate(["foodItems.item"]);
@@ -70,5 +62,4 @@ module.exports = {
   updateOrderService,
   cancelOrderService,
   deleteOrderService,
-  // getOrdersByDetailsIdService,
 };
