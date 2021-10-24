@@ -54,7 +54,7 @@ describe('/ManagerSignUp', () => {
     
     //   expect(user).not.toBeNull();
     //   done()
-    // },500000);
+    // },6000);
 
     // it('should return the User if it is valid', async () => {
     //   await longProcess();

@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const config = require("config");
 const bcrypt = require("bcrypt");
 const _ = require("lodash");
-const { Waiter, validate } = require("../models/waiter.model");
+const { Waiter, validateWaiter } = require("../models/waiter.model");
 const mongoose = require("mongoose");
 const express = require("express");
 const router = express.Router();
@@ -16,7 +16,7 @@ const router = express.Router();
 // });
 
 router.post("/signup",auth, async (req, res) => {
-  const validation = validate(req.body);
+  const validation = validateWaiter(req.body);
   if (validation.error) {
     return res.status(400).json(validation.error.details[0].message);
   }
