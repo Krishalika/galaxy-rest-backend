@@ -3,6 +3,7 @@ const Review = require('../../models/review.model');
 const mongoose = require('mongoose');
 let {server}=require('../../index');
 let {connection}=require('../../index');
+const {User} = require('../../models/user.model');
 server.close()
 
 describe('/review', () => {
@@ -80,17 +81,20 @@ describe('/review', () => {
     let newReply; 
     let review; 
     let id; 
+    let token; 
 
     const exec = async () => {
       return await request(server)
         .post('/review/update/' + id)
+        .set('Authorization', `Bearer ${token}`)
         .send({ reply:newReply,name,rating,review});
         
     }
 
     beforeEach(async () => {
       // Before each test we need to create a review and 
-      // put it in the database.      
+      // put it in the database.  
+      token = new User().generateAuthToken();      
       review = new Review({ name: "Newton",
       rating: 3,
       review: "Nice hotel",

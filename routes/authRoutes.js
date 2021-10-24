@@ -1,4 +1,5 @@
 const express = require("express");
+const config = require("config");
 const Joi = require("joi");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
@@ -7,28 +8,32 @@ const { User } = require("../models/user.model");
 const mongoose = require("mongoose");
 const router = express.Router();
 
-router.post("/signin", async (req, res) => {
-  const validation = validate(req.body);
+router.post('/signin',async (req,res)=>{
+    const validation = validate(req.body);
   if (validation.error) {
     return res.status(400).send(validation.error.details[0].message);
   }
-
-  try {
-    let user = await User.findOne({ email: req.body.email });
-    if (!user) return res.status(400).send("Invalid email or password.");
-    const validPassword = await bcrypt.compare(
+  try{
+  let user = await User.findOne({ email: req.body.email });
+ 
+  if(!user){
+      return res.status(400).send("Invalid email or password")
+  }
+      const validPassword = await bcrypt.compare(
       req.body.password,
       user.password
     );
     if (!validPassword)
       return res.status(400).send("Invalid email or password.");
-
+  
+    // const token = jwt.sign({userId:user._id},config.get("jwtPrivateKey"))
     const token = user.generateAuthToken();
-    res.header("x-auth-token", token).send({ token: token });
-  } catch (err) {
-    return res.status(422).send({ error: "must provide email or password" });
+    res.send({token})
+  }catch(err){
+      return res.status(422).send({ error: "must provide email or password" })
   }
-});
+
+})
 
 function validate(req) {
   const schema = Joi.object({
@@ -40,3 +45,27 @@ function validate(req) {
 }
 
 module.exports = router;
+
+
+// router.post("/signin", async (req, res) => {
+//   const validation = validate(req.body);
+//   if (validation.error) {
+//     return res.status(400).send(validation.error.details[0].message);
+//   }
+
+//   try {
+//     let user = await User.findOne({ email: req.body.email });
+//     if (!user) return res.status(400).send("Invalid email or password.");
+//     const validPassword = await bcrypt.compare(
+//       req.body.password,
+//       user.password
+//     );
+//     if (!validPassword)
+//       return res.status(400).send("Invalid email or password.");
+
+//     const token = user.generateAuthToken();
+//     res.header("x-auth-token", token).send({ token: token });
+//   } catch (err) {
+//     return res.status(422).send({ error: "must provide email or password" });
+//   }
+// });
