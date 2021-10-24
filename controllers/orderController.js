@@ -6,6 +6,7 @@ const {
   updateOrderService,
   cancelOrderService,
   deleteOrderService,
+  getOrdersByDetailsIdService,
 } = require("../services/orderServices");
 const { orderValidation } = require("../models/order.model");
 
@@ -26,6 +27,15 @@ const addOrder = async (req, res) => {
 const getOrdersById = async (req, res) => {
   try {
     const orders = await getOrdersByIdService(req.params.idNumber);
+    res.status(200).send(orders);
+  } catch (error) {
+    res.status(error.status || 401).send({ message: error.message });
+  }
+};
+
+const getOrdersDetails = async (req, res) => {
+  try {
+    const orders = await getOrdersByDetailsIdService(req.params.id);
     res.status(200).send(orders);
   } catch (error) {
     res.status(error.status || 401).send({ message: error.message });
@@ -99,5 +109,5 @@ const cancelOrder = async (req, res) => {
   }
 };
 
-module.exports = { addOrder, getOrdersById, getOrders, updateOrder, cancelOrder,deleteOrder };
+module.exports = { addOrder, getOrdersById, getOrders, updateOrder, cancelOrder,deleteOrder,getOrdersDetails };
 
