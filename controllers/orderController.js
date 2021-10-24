@@ -6,7 +6,7 @@ const {
   updateOrderService,
   cancelOrderService,
   deleteOrderService,
-  getOrdersByDetailsIdService,
+  // getOrdersByDetailsIdService,
 } = require("../services/orderServices");
 const { orderValidation } = require("../models/order.model");
 
@@ -33,14 +33,14 @@ const getOrdersById = async (req, res) => {
   }
 };
 
-const getOrdersDetails = async (req, res) => {
-  try {
-    const orders = await getOrdersByDetailsIdService(req.params.id);
-    res.status(200).send(orders);
-  } catch (error) {
-    res.status(error.status || 401).send({ message: error.message });
-  }
-};
+// const getOrdersDetails = async (req, res) => {
+//   try {
+//     const orders = await getOrdersByDetailsIdService(req.params.id);
+//     res.status(200).send(orders);
+//   } catch (error) {
+//     res.status(error.status || 401).send({ message: error.message });
+//   }
+// };
 
 const getOrders = async (req, res) => {
   try {
@@ -87,7 +87,6 @@ const deleteOrder = async (req, res) => {
   }
 };
 
-
 // const updateFood = async (req, res) => {
 //   const validation = validateFood(req.body);
 //   if (validation.error) {
@@ -109,5 +108,12 @@ const cancelOrder = async (req, res) => {
   }
 };
 
-module.exports = { addOrder, getOrdersById, getOrders, updateOrder, cancelOrder,deleteOrder,getOrdersDetails };
-
+module.exports = {
+  addOrder,
+  getOrdersById,
+  getOrders,
+  updateOrder,
+  cancelOrder,
+  deleteOrder,
+  // getOrdersDetails,
+};

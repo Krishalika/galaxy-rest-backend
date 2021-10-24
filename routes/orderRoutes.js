@@ -4,7 +4,7 @@ const orderController = require("../controllers/orderController");
 
 orderRouter.post("/", orderController.addOrder);
 orderRouter.get("/:idNumber", orderController.getOrdersById);
-orderRouter.get("/details/:id", orderController.getOrdersDetails);
+// orderRouter.get("/details/:id", orderController.getOrdersDetails);
 orderRouter.get("/", orderController.getOrders);
 orderRouter.post("/update", orderController.updateOrder);
 orderRouter.delete("/:id", orderController.cancelOrder);

@@ -25,7 +25,6 @@ const addTableResService = async (req, res) => {
 
 const getTableResService = async () => {
   try {
-    //return await TableReservation.find();
     //return await TableReservation.find().populate(["table"]);;
     return await TableReservation.find({date:{$gte:new Date()}}).populate(["table"]).sort({"date": 1});
 
