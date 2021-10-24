@@ -1,5 +1,6 @@
 const request = require('supertest');
 const {Food} = require('../../models/food.model');
+const {User} = require('../../models/user.model');
 const mongoose = require('mongoose');
 let {server}=require('../../index');
 let {connection}=require('../../index');
@@ -41,19 +42,27 @@ describe('/food', () => {
   });
 
   describe('POST /', () => {
-    let name;let description;let price;let code; let category; let status; let img; let discount
+    let name;let description;let price;let code; let category; let status; let img; let discount;let token; 
 
     const exec = async () => {
       return await request(server)
         .post('/food/add')
+        .set('Authorization', `Bearer ${token}`)
         .send({ name,description,price,code,category,status,img,discount});
     }
 
     beforeEach(() => {   
+      token = new User().generateAuthToken();   
       name= "MilkShake";description= "Cool";price= 150.65;code="D100";category="Drinks",status="Available";img="https://www.google.com";
         discount= 0
     })
+    it('should return 401 if user is not logged in', async () => {
+      token = ''; 
 
+      const res = await exec();
+
+      expect(res.status).toBe(401);
+    });
     it('should return 400 if food is less than 3 characters', async () => {
       name = 'fo'; description= "Cool";price= 150.65;code="D100";category="Drinks",status="Available";img="https://www.google.com";
       discount= 0
@@ -98,17 +107,20 @@ describe('/food', () => {
     let newName; 
     let food; 
     let id; 
+    let token; 
 
     const exec = async () => {
       return await request(server)
         .post('/food/update/' + id)
+        .set('Authorization', `Bearer ${token}`)
         .send({ name:newName,description,price,code,category,status,img,discount});
         
     }
 
     beforeEach(async () => {
       // Before each test we need to create a food and 
-      // put it in the database.      
+      // put it in the database. 
+      token = new User().generateAuthToken();       
       food = new Food({ name: "MilkShake",
       description: "Cool",
       price: 150.65,
@@ -177,16 +189,19 @@ describe('/food', () => {
   describe('DELETE /:id', () => { 
     let food; 
     let id; 
+    let token; 
 
     const exec = async () => {
       return await request(server)
         .delete('/food/' + id)
+        .set('Authorization', `Bearer ${token}`)
         .send();
     }
 
     beforeEach(async () => {
       // Before each test we need to create a food and 
-      // put it in the database.      
+      // put it in the database. 
+      token = new User().generateAuthToken();       
       food = new Food({ name: "MilkShake",
       description: "Cool",
       price: 150.65,
@@ -249,7 +264,7 @@ describe('/food', () => {
 
   });
   describe('GET /byCategory', () => {
-    it('should return a food item if valid id is passed', async () => {
+    it('should return a food item if valid Category is passed', async () => {
       food = new Food({ name: "MilkShake",
       description: "Cool",
       price: 150.65,
@@ -267,7 +282,7 @@ describe('/food', () => {
 
   });
   describe('GET /byName', () => {
-    it('should return a food item if valid id is passed', async () => {
+    it('should return a food item if valid name is passed', async () => {
       food = new Food({ name: "MilkShake",
       description: "Cool",
       price: 150.65,
@@ -285,7 +300,7 @@ describe('/food', () => {
 
   });
   describe('GET /byCode', () => {
-    it('should return a food item if valid id is passed', async () => {
+    it('should return a food item if valid code is passed', async () => {
       food = new Food({ name: "MilkShake",
       description: "Cool",
       price: 150.65,

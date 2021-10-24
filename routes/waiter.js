@@ -15,7 +15,7 @@ const router = express.Router();
 //   res.send(waiter);
 // });
 
-router.post("/signup", async (req, res) => {
+router.post("/signup",auth, async (req, res) => {
   const validation = validate(req.body);
   if (validation.error) {
     return res.status(400).json(validation.error.details[0].message);
