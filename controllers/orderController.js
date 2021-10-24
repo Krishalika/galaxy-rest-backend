@@ -6,7 +6,6 @@ const {
   updateOrderService,
   cancelOrderService,
   deleteOrderService,
-  // getOrdersByDetailsIdService,
 } = require("../services/orderServices");
 const { orderValidation } = require("../models/order.model");
 
