@@ -77,19 +77,6 @@ const deleteOrder = async (req, res) => {
   }
 };
 
-
-// const updateFood = async (req, res) => {
-//   const validation = validateFood(req.body);
-//   if (validation.error) {
-//     return res.status(400).json(validation.error.details[0].message);
-//   }
-//   try {
-//     const food = await updateFoodService(req, res);
-//   } catch (error) {
-//     res.status(error.status || 422).send({ message: error.message });
-//   }
-// };
-
 const cancelOrder = async (req, res) => {
   try {
     await cancelOrderService(req.params.id);
@@ -99,5 +86,11 @@ const cancelOrder = async (req, res) => {
   }
 };
 
-module.exports = { addOrder, getOrdersById, getOrders, updateOrder, cancelOrder,deleteOrder };
-
+module.exports = {
+  addOrder,
+  getOrdersById,
+  getOrders,
+  updateOrder,
+  cancelOrder,
+  deleteOrder,
+};

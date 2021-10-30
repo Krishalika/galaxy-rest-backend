@@ -18,7 +18,7 @@ const getOrdersByIdService = async (idNumber) => {
 
 const getOrdersService = async (orderDetails) => {
   try {
-    return await Order.find();
+    return await Order.find({state: { $ne: "Closed" } }).populate(["foodItems.item"]);
   } catch (e) {
     throw e;
   }
